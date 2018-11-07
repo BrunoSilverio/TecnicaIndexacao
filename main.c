@@ -3,16 +3,27 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+
+typedef struct{
+	int pKey;
+	char nome[50];
+	char genero[50];
+	double valor;
+	int quantidade;
+}tipoFilmes;
+
+
+int registroExiste(int chave);
+
 int consultaRegistro(int chave);
 int alteraRegistro(int chave);
 int eliminaRegistro(int chave);
-int insereRegistro();
+int insereRegistro(tipoFilmes filme);
 
 //|int tipo| -> define o tipo de impressao
 int impressao(int tipo);
 
-void main()
-{
+void main(){
 	FILE *arq = fopen("filmes.dat","rb");
 	if(!arq){
 		printf("ERRO AO ABRIR ARQUIVO");
@@ -20,7 +31,10 @@ void main()
 	}
 	int option,option2;
 	int chave;
+	tipoFilmes filme;
+	
 
+	
 	//MENU PRINCIPAL
 	do{
 		printf("1 >> Consultar um registro\n");
@@ -31,7 +45,7 @@ void main()
 		printf("6 >> Sair\n\nOpcao >> ");
 		scanf("%d",&option);
 
-		system("cls");
+		system("clear");
 
 		switch(option)
 		{
@@ -64,6 +78,8 @@ void main()
 				scanf("%i",&chave);
 				if(alteraRegistro(chave) != 0){//falha
 					printf("REGISTRO NAO ENCONTRADO\n");
+				}else{
+					printf("REGISTRO ALTERADO\n");
 				}
 				break;
 
@@ -79,6 +95,8 @@ void main()
 				scanf("%i",&chave);
 				if(eliminaRegistro(chave)!= 0){
 					printf("REGISTRO NAO ENCONTRADO\n");	
+				}else{
+					printf("REGISTRO ELIMINADO\n");
 				}
 				break;
 
@@ -87,13 +105,36 @@ void main()
 			//Inserir o novo registro no final do arquivo;
 			//Atualizar os respectivos indices; 
 			//Imprimir mensagem:!insercao feita com sucesso!;
+				
+				
 				printf("4 >> Inserir um registro no arquivo\n");
+				printf("Digite a chave primaria: ");
+				scanf("%d",&filme.pKey);
+				printf("Digite o nome do filme: ");
+				scanf("%s",&filme.nome);
+				printf("Digite o genero do filme: ");
+				scanf("%s",&filme.genero);
+				printf("Digite o valor do filme: ");
+				scanf("%lf",&filme.valor);
+				printf("Digite a quantidade do filme: ");
+				scanf("%i",&filme.quantidade);
+				
+				while(registroExiste(filme.pKey) == 1){
+					//chave existente
+					system("clear");
+					printf("\nCHAVE EXISTENTE\n");
+					printf("Digite a chave primaria: ");
+					scanf("%d",&filme.pKey);
+				}
+				
+				if(insereRegistro(filme)== 1){
+					printf("\nINSERCAO FEITA COM SUCESSO\n");
+				}
 
-
-				main();
 				break;
 
 			case 5:
+			do{
 				printf("[IMPRESSAO]\n");
 				printf("1 >> Ordenacao por Chave Primaria\n");
 				printf("2 >> Ordenacao pelo campo2.\n");
@@ -105,42 +146,10 @@ void main()
 
 				system("cls");
 
-				switch(option2)
-				{
-					case 1:
-						printf("1 >> Ordenacao por Chave Primaria\n");
-
-
-						break;
-
-					case 2:
-						printf("2 >> Ordenacao pelo campo2.\n");
-
-
-						break;
-
-					case 3:
-						printf("3 >> Por Categoria ordenado pelo campo chave.\n");
-
-
-						break;
-
-					case 4:
-						printf("4 >> Por categoria ordenado pelo campo2.\n");
-
-
-						break;
-
-					case 5:
-						printf("5 >> Dados do arquivo desordenado.\n");
-
-
-						break;
-
-					case 6:
-						main();
-						break;
+				if(impressao(option2) != 0){
+					printf("OPCAO INVALIDA\n");
 				}
+			}while(option2 != 6);
 
 				break;
 
@@ -153,4 +162,49 @@ void main()
 				break;
 		}
 	}while(option!=6);
+}
+
+int impressao(int tipo){
+
+	switch(tipo)
+				{
+					case 1:
+						printf("1 >> Ordenacao por Chave Primaria\n");
+				
+
+						break;
+
+					case 2:
+						printf("2 >> Ordenacao pelo campo2.\n");
+						
+						break;
+
+					case 3:
+						printf("3 >> Por Categoria ordenado pelo campo chave.\n");
+						
+						break;
+
+					case 4:
+						printf("4 >> Por categoria ordenado pelo campo2.\n");
+						
+						break;
+
+					case 5:
+						printf("5 >> Dados do arquivo desordenado.\n");
+						
+						break;
+					case 6:
+						return 0;
+						break;
+
+					default:
+					
+						return -1;
+						break;
+				}
+	return 0;
+}
+
+int registroExiste(int chave){
+
 }
