@@ -13,15 +13,24 @@ typedef struct{
 }tipoFilmes;
 
 
+/* 
+*	returns: 	
+*		1 if exists
+*		0 if not
+ */
 int registroExiste(int chave);
 
+/* 
+* returns:
+*	0 sucess
+*	!0 fail
+ */
 int consultaRegistro(int chave);
 int alteraRegistro(int chave);
 int eliminaRegistro(int chave);
 int insereRegistro(tipoFilmes filme);
+int impressao(int tipo);//|int tipo| -> define o tipo de impressao
 
-//|int tipo| -> define o tipo de impressao
-int impressao(int tipo);
 
 void main(){
 	FILE *arq = fopen("filmes.dat","rb");
@@ -32,19 +41,18 @@ void main(){
 	int option,option2;
 	int chave;
 	tipoFilmes filme;
-	
-
-	
+		
 	//MENU PRINCIPAL
 	do{
+		system("clear");
+		printf("\tTrabalho de ERDB\n\n");
 		printf("1 >> Consultar um registro\n");
-		printf("2 >> Alterar/Atualizar campo(s) de um registro (menos o campo chave prim�ria)\n");
+		printf("2 >> Alterar/Atualizar campo(s) de um registro (menos o campo chave primria)\n");
 		printf("3 >> Eliminar um registro do arquivo\n");
 		printf("4 >> Inserir um registro no arquivo\n");
 		printf("5 >> Impressao\n");
 		printf("6 >> Sair\n\nOpcao >> ");
 		scanf("%d",&option);
-
 		system("clear");
 
 		switch(option)
@@ -56,11 +64,12 @@ void main(){
 			//Ler no arquivo o registro procurado;
 			//Imprimir todas as informacoes do registro buscado;
 			//Caso nao exista o valor buscado: imprimir mensagem e nao fazer os passos iv e v, acima
-				printf("1 >> Consultar 'um registro'\n");
+				printf("1 >> Consultar um registro\n");
 				printf("Digite a chave primaria: ");
 				scanf("%i",&chave);
 				if(consultaRegistro(chave)!= 0){//falha
 					printf("REGISTRO NAO ENCONTRADO\n");
+					system("sleep 1");
 				}
 				break;
 
@@ -78,8 +87,10 @@ void main(){
 				scanf("%i",&chave);
 				if(alteraRegistro(chave) != 0){//falha
 					printf("REGISTRO NAO ENCONTRADO\n");
+					system("sleep 1");
 				}else{
 					printf("REGISTRO ALTERADO\n");
+					system("sleep 1");
 				}
 				break;
 
@@ -94,9 +105,11 @@ void main(){
 				printf("Digite a chave primaria: ");
 				scanf("%i",&chave);
 				if(eliminaRegistro(chave)!= 0){
-					printf("REGISTRO NAO ENCONTRADO\n");	
+					printf("REGISTRO NAO ENCONTRADO\n");
+					system("sleep 1");	
 				}else{
 					printf("REGISTRO ELIMINADO\n");
+					system("sleep 1");
 				}
 				break;
 
@@ -111,9 +124,9 @@ void main(){
 				printf("Digite a chave primaria: ");
 				scanf("%d",&filme.pKey);
 				printf("Digite o nome do filme: ");
-				scanf("%s",&filme.nome);
+				scanf("%s",filme.nome);
 				printf("Digite o genero do filme: ");
-				scanf("%s",&filme.genero);
+				scanf("%s",filme.genero);
 				printf("Digite o valor do filme: ");
 				scanf("%lf",&filme.valor);
 				printf("Digite a quantidade do filme: ");
@@ -129,6 +142,10 @@ void main(){
 				
 				if(insereRegistro(filme)== 1){
 					printf("\nINSERCAO FEITA COM SUCESSO\n");
+					system("sleep 1");
+				}else{
+					printf("\nERRO AO INSERIR\n");
+					system("sleep 1");	
 				}
 
 				break;
@@ -144,10 +161,11 @@ void main(){
 				printf("6 >> Voltar Menu Principal\n\nOpcao >> ");
 				scanf("%d",&option2);
 
-				system("cls");
+				system("clear");
 
 				if(impressao(option2) != 0){
 					printf("OPCAO INVALIDA\n");
+					system("sleep 1");
 				}
 			}while(option2 != 6);
 
@@ -159,6 +177,7 @@ void main(){
 			
 			default:
 				printf("\nOPCAO INVALIDA\n");
+				system("sleep 1");
 				break;
 		}
 	}while(option!=6);
@@ -207,4 +226,27 @@ int impressao(int tipo){
 
 int registroExiste(int chave){
 
+	//carregar indice na memoria, usar busca binaria para achar
+	//retornar o resultado
+
+	
+
+
 }
+
+int consultaRegistro(int chave){
+
+}
+
+int alteraRegistro(int chave){
+
+}
+
+int eliminaRegistro(int chave){
+
+}
+
+int insereRegistro(tipoFilmes filme){
+
+}
+

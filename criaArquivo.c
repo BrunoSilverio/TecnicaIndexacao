@@ -79,10 +79,12 @@ void main(){
         //remove the '\n' caracter
         strtok(films[i].nome,"\n");
         strtok(films[i].genero,"\n");
-
-        printf("reg_no:%i\npKey:%i\nname:%s\ngenre:%s\nvalue:%.2lf\nqtd:%i\n\n",i+1,
-        films[i].pKey,films[i].nome,films[i].genero,films[i].valor,films[i].quantidade);
-
+        
+            /* 
+            printf("reg_no:%i\npKey:%i\nname:%s\ngenre:%s\nvalue:%.2lf\nqtd:%i\n\n",i+1,
+            films[i].pKey,films[i].nome,films[i].genero,films[i].valor,films[i].quantidade);
+             */
+        
         if(feof(input))
             break;
     }
